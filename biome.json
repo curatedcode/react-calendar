@@ -1,0 +1,27 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+	"files": {
+		"ignore": ["dist/**", "node_modules/**"]
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"ignore": ["dist/**", "node_modules/**"],
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": { "level": "error" }
+			},
+			"suspicious": {
+				"noExplicitAny": { "level": "warn" }
+			},
+			"nursery": {
+				"noUnusedImports": { "level": "error" },
+				"noImplicitAnyLet": { "level": "error" },
+				"noAriaHiddenOnFocusable": { "level": "error" }
+			}
+		}
+	}
+}

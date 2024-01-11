@@ -1,0 +1,75 @@
+{
+	"name": "@curatedcode/react-calendar",
+	"version": "0.0.1",
+	"description": "A fully accessible and customizable react calendar component styled with Tailwind CSS",
+	"main": "dist/index.cjs",
+	"typings": "dist/index.d.ts",
+	"module": "dist/index.js",
+	"author": "Zackary Fotheringham",
+	"license": "MIT",
+	"files": [
+		"README.MD",
+		"dist"
+	],
+	"exports": {
+		"types": {
+			"import": "./dist/index.d.ts",
+			"require": "./dist/index.d.cts"
+		},
+		"import": "./dist/index.js",
+		"require": "./dist/index.cjs"
+	},
+	"type": "module",
+	"engines": {
+		"node": ">=16"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/curatedcode/react-calendar.git",
+		"directory": ""
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"lint": "pnpm dlx @biomejs/biome check --apply .",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
+		"test": "vitest"
+	},
+	"peerDependencies": {
+		"react": "^16 || ^17 || ^18",
+		"react-dom": "^16 || ^17 || ^18"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.4.1",
+		"@heroicons/react": "^2.1.1",
+		"@storybook/addon-a11y": "^7.6.7",
+		"@storybook/addon-essentials": "7.6.7",
+		"@storybook/addon-interactions": "7.6.7",
+		"@storybook/addon-links": "7.6.7",
+		"@storybook/blocks": "7.6.7",
+		"@storybook/react": "7.6.7",
+		"@storybook/react-vite": "7.6.7",
+		"@storybook/test": "7.6.7",
+		"@types/node": "^20.10.6",
+		"@types/react": "^18.2.46",
+		"@types/react-dom": "^18.2.18",
+		"autoprefixer": "^10.4.16",
+		"mockdate": "^3.0.5",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"storybook": "7.6.7",
+		"tailwindcss": "^3.4.0",
+		"tsup": "^8.0.1",
+		"typescript": "^5.3.3",
+		"vitest": "^1.1.1"
+	},
+	"dependencies": {
+		"@floating-ui/react": "^0.26.4",
+		"dayjs": "^1.11.10"
+	}
+}
