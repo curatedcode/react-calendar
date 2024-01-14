@@ -25,9 +25,6 @@ devDependencies:
   '@storybook/addon-essentials':
     specifier: 7.6.7
     version: 7.6.7(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
-  '@storybook/addon-interactions':
-    specifier: 7.6.7
-    version: 7.6.7
   '@storybook/addon-links':
     specifier: 7.6.7
     version: 7.6.7(react@18.2.0)
@@ -1990,17 +1987,6 @@ packages:
       - supports-color
     dev: true
 
-  /@jest/types@27.5.1:
-    resolution: {integrity: sha512-Cx46iJ9QpwQTjIdq5VJu2QTMMs3QlEjI0x1QbBP5W1+nMzyc2XmimiRR/CbX9TO0cPTeUlxWMOu8mslYsJ8DEw==}
-    engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-    dependencies:
-      '@types/istanbul-lib-coverage': 2.0.6
-      '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.10.6
-      '@types/yargs': 16.0.9
-      chalk: 4.1.2
-    dev: true
-
   /@jest/types@29.6.3:
     resolution: {integrity: sha512-u3UPsIilWKOM3F9CXtrG8LEJmNxwoCQC/XVj4IKYXvvpx7QIi/Kg1LI5uDmDpKlac62NUtX7eLjRh+jVZcLOzw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -2900,16 +2886,6 @@ packages:
     resolution: {integrity: sha512-2F/tJdn45d4zrvf/cmE1vsczl99wK8+I+kkj0G7jLsrJR0w1zTgbgjy6T9j86HBTBvWcnysNFNIRWPAOh5Wdbw==}
     dependencies:
       '@storybook/global': 5.0.0
-    dev: true
-
-  /@storybook/addon-interactions@7.6.7:
-    resolution: {integrity: sha512-iXE2m9i/1D2baYkRgoYe9zwcAjtBOxBfW4o2AS0pzBNPN7elpP9C6mIa0ScpSltawBfIjfe6iQRXAMXOsIIh3Q==}
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@storybook/types': 7.6.7
-      jest-mock: 27.5.1
-      polished: 4.2.2
-      ts-dedent: 2.2.0
     dev: true
 
   /@storybook/addon-links@7.6.7(react@18.2.0):
@@ -3840,12 +3816,6 @@ packages:
 
   /@types/yargs-parser@21.0.3:
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
-    dev: true
-
-  /@types/yargs@16.0.9:
-    resolution: {integrity: sha512-tHhzvkFXZQeTECenFoRljLBYPZJ7jAVxqqtEI0qTLOmuultnFp4I9yKE17vTuhf7BkhCu7I4XuemPgikDVuYqA==}
-    dependencies:
-      '@types/yargs-parser': 21.0.3
     dev: true
 
   /@types/yargs@17.0.32:
@@ -5967,14 +5937,6 @@ packages:
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
-
-  /jest-mock@27.5.1:
-    resolution: {integrity: sha512-K4jKbY1d4ENhbrG2zuPWaQBvDly+iZ2yAW+T1fATN78hc0sInwn7wZB8XtlNnvHug5RMwV897Xm4LqmPM4e2Og==}
-    engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-    dependencies:
-      '@jest/types': 27.5.1
-      '@types/node': 20.10.6
     dev: true
 
   /jest-regex-util@29.6.3:
