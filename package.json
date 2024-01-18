@@ -1,7 +1,7 @@
 {
 	"name": "@curatedcode/react-calendar",
 	"version": "0.0.1",
-	"description": "A fully accessible and customizable react calendar component styled with Tailwind CSS",
+	"description": "A fully accessible and customizable react calendar component",
 	"main": "dist/index.cjs",
 	"typings": "dist/index.d.ts",
 	"module": "dist/index.js",
@@ -58,7 +58,6 @@
 		"@types/react": "^18.2.46",
 		"@types/react-dom": "^18.2.18",
 		"autoprefixer": "^10.4.16",
-		"mockdate": "^3.0.5",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"storybook": "7.6.7",
@@ -68,7 +67,6 @@
 		"vitest": "^1.1.1"
 	},
 	"dependencies": {
-		"@floating-ui/react": "^0.26.4",
 		"dayjs": "^1.11.10"
 	}
 }
