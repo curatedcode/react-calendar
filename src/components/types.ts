@@ -13,6 +13,11 @@ export type EventType = {
   title: string;
 } & (AllDayEventType | StandardEventType);
 
+export type EventGroup = {
+  date: string;
+  events: EventType[];
+};
+
 export type CalendarViewType =
   | "day"
   | "week"
@@ -51,9 +56,4 @@ export type DefaultComponentProps = {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-};
-
-export type EventGroup<T = void> = {
-  date: string;
-  events: T extends "isAllDay" ? AllDayEventType[] : EventType[];
 };

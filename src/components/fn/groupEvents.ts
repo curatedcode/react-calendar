@@ -19,11 +19,6 @@ export type GroupEventsArgs = {
   calendarSelectedDate: dayjs.Dayjs;
 };
 
-export type GroupEventsReturnType = {
-  allDay: EventGroup<"isAllDay">[];
-  standard: EventGroup[];
-};
-
 /**
  * Sorts events then groups them according to the calendar view
  */
@@ -31,7 +26,7 @@ function groupEvents({
   events,
   calendarView,
   calendarSelectedDate,
-}: GroupEventsArgs): GroupEventsReturnType {
+}: GroupEventsArgs): EventGroup[] {
   let amountOfGroups: number;
   const sixWeeksFromMonth = getSixWeeksByMonth(calendarSelectedDate).flatMap(
     (val) => val
@@ -70,10 +65,7 @@ function groupEvents({
     return -1;
   });
 
-  const groupedEvents: GroupEventsReturnType = {
-    allDay: [],
-    standard: [],
-  };
+  const groupedEvents: EventGroup[] = [];
 
   for (let i = 0; i < amountOfGroups; i++) {
     const group = {
@@ -103,13 +95,11 @@ function groupEvents({
         group.date = calendarSelectedDate.add(i, "days").toISOString();
     }
 
-    groupedEvents.allDay.push(group);
-    groupedEvents.standard.push(group);
+    groupedEvents.push(group);
   }
 
-  for (let i = 0; i < groupedEvents.standard.length; i++) {
-    const allDayGroup = groupedEvents.allDay[i];
-    const standardGroup = groupedEvents.standard[i];
+  for (let i = 0; i < amountOfGroups; i++) {
+    const group = groupedEvents[i];
 
     for (let j = 0; j < eventsSortedByDate.length; j++) {
       const event = eventsSortedByDate[j];
@@ -118,19 +108,13 @@ function groupEvents({
         : dayjs(event.startDate);
 
       const isSameDate = eventDate.isSame(
-        // standardGroup and allDayGroup dates are always the same value
-        standardGroup.date,
+        group.date,
         calendarView === "year" ? "month" : "date"
       );
 
       if (!isSameDate) continue;
 
-      if (event.isAllDay) {
-        allDayGroup.events.push(event);
-      } else {
-        console.log("pushed standard");
-        standardGroup.events.push(event);
-      }
+      group.events.push(event);
     }
   }
 

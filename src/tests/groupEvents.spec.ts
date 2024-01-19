@@ -80,34 +80,26 @@ describe("groupEvents", () => {
       calendarView: "day",
     });
 
-    expect(result).toStrictEqual({
-      allDay: [
-        {
-          date: "2024-01-17T05:00:00.000Z",
-          events: [],
-        },
-      ],
-      standard: [
-        {
-          date: "2024-01-17T05:00:00.000Z",
-          events: [
-            {
-              title: "Team meeting",
-              startDate: "2024-01-17T05:00:00.000Z",
-              endDate: "2024-01-17T05:15:00.000Z",
-            },
-            {
-              title: "Lunch with Sarah",
-              startDate: "2024-01-17T08:00:00.000Z",
-              endDate: "2024-01-17T08:45:00.000Z",
-            },
-          ],
-        },
-      ],
-    });
+    expect(result).toStrictEqual([
+      {
+        date: "2024-01-17T05:00:00.000Z",
+        events: [
+          {
+            title: "Team meeting",
+            startDate: "2024-01-17T05:00:00.000Z",
+            endDate: "2024-01-17T05:15:00.000Z",
+          },
+          {
+            title: "Lunch with Sarah",
+            startDate: "2024-01-17T08:00:00.000Z",
+            endDate: "2024-01-17T08:45:00.000Z",
+          },
+        ],
+      },
+    ]);
   });
 
-  test.skip("returns dates grouped by week", () => {
+  test("returns dates grouped by week", () => {
     const systemDate = new Date(2024, 0, 17);
     vi.setSystemTime(systemDate);
 
@@ -170,99 +162,68 @@ describe("groupEvents", () => {
       calendarView: "week",
     });
 
-    expect(result).toStrictEqual({
-      standard: {
-        date: "",
+    expect(result).toStrictEqual([
+      { date: "2024-01-14T05:00:00.000Z", events: [] },
+      {
+        date: "2024-01-15T05:00:00.000Z",
         events: [
           {
+            title: "Fast",
+            isAllDay: true,
             date: "2024-01-15T05:00:00.000Z",
-            events: [
-              {
-                title: "Dentist appointment",
-                startDate: "2024-01-15T05:00:00.000Z",
-                endDate: "2024-01-15T06:00:00.000Z",
-              },
-            ],
+          },
+          {
+            title: "Dentist appointment",
+            startDate: "2024-01-15T05:00:00.000Z",
+            endDate: "2024-01-15T06:00:00.000Z",
           },
         ],
       },
-      allDay: {
-        date: "",
+      {
+        date: "2024-01-16T05:00:00.000Z",
         events: [
           {
-            date: "2024-01-15T05:00:00.000Z",
-            events: [
-              {
-                title: "Dentist appointment",
-                startDate: "2024-01-15T05:00:00.000Z",
-                endDate: "2024-01-15T06:00:00.000Z",
-              },
-            ],
+            title: "Team meeting",
+            startDate: "2024-01-16T05:00:00.000Z",
+            endDate: "2024-01-16T05:15:00.000Z",
           },
         ],
       },
-
-      // { date: "2024-01-14T05:00:00.000Z", events: [] },
-      // {
-      //   date: "2024-01-15T05:00:00.000Z",
-      //   events: [
-      //     {
-      //       title: "Fast",
-      //       isAllDay: true,
-      //       date: "2024-01-15T05:00:00.000Z",
-      //     },
-      //     {
-      //       title: "Dentist appointment",
-      //       startDate: "2024-01-15T05:00:00.000Z",
-      //       endDate: "2024-01-15T06:00:00.000Z",
-      //     },
-      //   ],
-      // },
-      // {
-      //   date: "2024-01-16T05:00:00.000Z",
-      //   events: [
-      //     {
-      //       title: "Team meeting",
-      //       startDate: "2024-01-16T05:00:00.000Z",
-      //       endDate: "2024-01-16T05:15:00.000Z",
-      //     },
-      //   ],
-      // },
-      // { date: "2024-01-17T05:00:00.000Z", events: [] },
-      // {
-      //   date: "2024-01-18T05:00:00.000Z",
-      //   events: [
-      //     {
-      //       title: "Presentation rehearsal",
-      //       startDate: "2024-01-18T05:00:00.000Z",
-      //       endDate: "2024-01-18T06:45:00.000Z",
-      //     },
-      //   ],
-      // },
-      // {
-      //   date: "2024-01-19T05:00:00.000Z",
-      //   events: [
-      //     {
-      //       title: "Call with client",
-      //       startDate: "2024-01-19T05:00:00.000Z",
-      //       endDate: "2024-01-19T05:30:00.000Z",
-      //     },
-      //   ],
-      // },
-      // {
-      //   date: "2024-01-20T05:00:00.000Z",
-      //   events: [
-      //     {
-      //       title: "Yoga class",
-      //       startDate: "2024-01-20T05:00:00.000Z",
-      //       endDate: "2024-01-20T05:00:00.000Z",
-      //     },
-      //   ],
-      // },
-    });
+      { date: "2024-01-17T05:00:00.000Z", events: [] },
+      {
+        date: "2024-01-18T05:00:00.000Z",
+        events: [
+          {
+            title: "Presentation rehearsal",
+            startDate: "2024-01-18T05:00:00.000Z",
+            endDate: "2024-01-18T06:45:00.000Z",
+          },
+        ],
+      },
+      {
+        date: "2024-01-19T05:00:00.000Z",
+        events: [
+          {
+            title: "Call with client",
+            startDate: "2024-01-19T05:00:00.000Z",
+            endDate: "2024-01-19T05:30:00.000Z",
+          },
+        ],
+      },
+      {
+        date: "2024-01-20T05:00:00.000Z",
+        events: [
+          {
+            title: "Yoga class",
+            startDate: "2024-01-20T05:00:00.000Z",
+            endDate: "2024-01-20T05:00:00.000Z",
+          },
+        ],
+      },
+    ]);
   });
 
-  test.skip("returns dates grouped by 5-days", () => {
+  test("returns dates grouped by 5-days", () => {
     const systemDate = new Date(2024, 0, 17);
     vi.setSystemTime(systemDate);
 
@@ -370,7 +331,7 @@ describe("groupEvents", () => {
     ]);
   });
 
-  test.skip("returns dates grouped by month", () => {
+  test("returns dates grouped by month", () => {
     const systemDate = new Date(2024, 0, 17);
     vi.setSystemTime(systemDate);
 
@@ -566,7 +527,7 @@ describe("groupEvents", () => {
     ]);
   });
 
-  test.skip("returns dates grouped by year", () => {
+  test("returns dates grouped by year", () => {
     const systemDate = new Date(2024, 0, 17);
     vi.setSystemTime(systemDate);
 
@@ -741,7 +702,7 @@ describe("groupEvents", () => {
     ]);
   });
 
-  test.skip("returns dates grouped by schedule", () => {
+  test("returns dates grouped by schedule", () => {
     const systemDate = new Date(2024, 0, 17);
     vi.setSystemTime(systemDate);
 

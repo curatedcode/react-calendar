@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { createContext, useContext } from "react";
-import type { GroupEventsReturnType } from "../fn/groupEvents";
-import type { CalendarViewType } from "../types";
+import type { CalendarViewType, EventGroup } from "../types";
 
 export type CalendarContextType = {
   datePickerSelectedDate: dayjs.Dayjs;
@@ -11,7 +10,7 @@ export type CalendarContextType = {
   handleCalendarNextPeriod: () => void;
   handleCalendarPreviousPeriod: () => void;
   handleCalendarDateReset: () => void;
-  events: GroupEventsReturnType;
+  events: EventGroup[];
 } | null;
 
 export const CalendarContext = createContext<CalendarContextType>(null);

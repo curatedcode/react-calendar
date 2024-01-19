@@ -1,10 +1,9 @@
-import type { GroupEventsReturnType } from "../fn/groupEvents";
-import type { CalendarViewType } from "../types";
+import type { CalendarViewType, EventGroup } from "../types";
 import { useCalendarContext } from "./Context";
 
 export type CalendarViewProps = {
   children: (_: {
-    groupedEvents: GroupEventsReturnType;
+    groupedEvents: EventGroup[];
     handleCalendarNextPeriod: () => void;
     handleCalendarPreviousPeriod: () => void;
     currentView: CalendarViewType;
