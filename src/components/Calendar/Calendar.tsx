@@ -118,10 +118,6 @@ function CalendarRoot({
     setCalendarView(defaultView);
   }, [defaultView]);
 
-  useEffect(() => {
-    console.log(calendarView);
-  }, [calendarView]);
-
   return (
     <CalendarContext.Provider
       value={{
