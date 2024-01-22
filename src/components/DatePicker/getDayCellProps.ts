@@ -39,7 +39,7 @@ function getDayCellProps({
     setSelectedDay,
   } = useDatePickerContext();
 
-  const dateAsDayjs = dayjs(date);
+  const dateAsDayjs = dayjs(date).startOf("day");
   const isOutsideMonth = dateAsDayjs.month() !== selectedMonth.month();
   const isSelected = selectedDay.toISOString() === dateAsDayjs.toISOString();
   const isToday = dayjs().toISOString() === dateAsDayjs.toISOString();

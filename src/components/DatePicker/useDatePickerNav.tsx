@@ -12,15 +12,24 @@ function useDatePickerNav({
   handlePrevMonth,
   viewRef,
 }: UseDatePickerNavProps) {
+  const [currentElement, setCurrentElement] = useState<HTMLButtonElement>();
+
   const [nextFocusableElementDate, setNextFocusableElementDate] =
     useState<string>();
+
   const [lastFocusedElement, setLastFocusedElement] =
     useState<HTMLButtonElement>();
 
+  // common properties to be applied to the current element
   useEffect(() => {
-    if (!nextFocusableElementDate) return;
+    if (!currentElement) return;
+    currentElement.tabIndex = -1;
+  }, [currentElement]);
 
-    const handleNextElement = setTimeout(() => {
+  useEffect(() => {
+    const handleArrowNavigation = setTimeout(() => {
+      if (!nextFocusableElementDate) return;
+
       const nextElement = viewRef.current?.querySelector(
         `button[data-cell-date="${nextFocusableElementDate}"]`
       ) as HTMLButtonElement | null;
@@ -29,14 +38,13 @@ function useDatePickerNav({
 
       nextElement.tabIndex = 0;
       nextElement.focus();
+
       if (lastFocusedElement) {
         lastFocusedElement.tabIndex = -1;
       }
-      setLastFocusedElement(nextElement);
-      setNextFocusableElementDate(undefined);
     }, 1);
 
-    return () => clearTimeout(handleNextElement);
+    return () => clearTimeout(handleArrowNavigation);
   }, [nextFocusableElementDate, viewRef, lastFocusedElement]);
 
   // stop scrolling with arrows when date picker cells are focused
@@ -60,11 +68,7 @@ function useDatePickerNav({
     return () => window.removeEventListener("keydown", handleKeydown);
   }, [viewRef]);
 
-  /**
-   * Controls navigating between cells in the picker calendar grid
-   * @param e  - react keyboard event emitter
-   * @param date - dayjs object of the cells date
-   */
+  // Controls navigating between cells in the picker calendar grid
   function keydownNavigator(e: KeyboardEvent<HTMLButtonElement>) {
     const rawCellDate = e.currentTarget.getAttribute("data-cell-date");
 
@@ -78,8 +82,10 @@ function useDatePickerNav({
     const cellDate = dayjs(rawCellDate);
 
     if (e.key === "ArrowLeft") {
-      e.currentTarget.tabIndex = -1;
+      setCurrentElement(e.currentTarget);
       const dateMinusDay = cellDate.subtract(1, "day");
+      setNextFocusableElementDate(dateMinusDay.toISOString());
+      setLastFocusedElement(e.currentTarget);
       const isNextElementOutsideMonth =
         dateMinusDay.month() !== cellDate.month();
 
@@ -87,17 +93,14 @@ function useDatePickerNav({
         handlePrevMonth();
       }
 
-      setNextFocusableElementDate(dateMinusDay.toISOString());
       return;
     }
 
     if (e.key === "ArrowRight") {
-      if (lastFocusedElement) {
-        lastFocusedElement.tabIndex = -1;
-      }
-
-      e.currentTarget.tabIndex = -1;
+      setCurrentElement(e.currentTarget);
       const datePlusDay = cellDate.add(1, "day");
+      setNextFocusableElementDate(datePlusDay.toISOString());
+      setLastFocusedElement(e.currentTarget);
       const isNextElementOutsideMonth =
         datePlusDay.month() !== cellDate.month();
 
@@ -105,12 +108,11 @@ function useDatePickerNav({
         handleNextMonth();
       }
 
-      setNextFocusableElementDate(datePlusDay.toISOString());
       return;
     }
 
     if (e.key === "ArrowDown") {
-      e.currentTarget.tabIndex = -1;
+      setCurrentElement(e.currentTarget);
       const datePlusSevenDays = cellDate.add(7, "day");
       const isNextElementOutsideMonth =
         datePlusSevenDays.month() !== cellDate.month();
@@ -124,7 +126,7 @@ function useDatePickerNav({
     }
 
     if (e.key === "ArrowUp") {
-      e.currentTarget.tabIndex = -1;
+      setCurrentElement(e.currentTarget);
       const dateMinusSevenDays = cellDate.subtract(7, "day");
       const isNextElementOutsideMonth =
         dateMinusSevenDays.month() !== cellDate.month();
