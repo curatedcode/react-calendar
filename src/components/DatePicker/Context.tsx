@@ -1,15 +1,13 @@
-import type dayjs from "dayjs";
 import { createContext, useContext } from "react";
+import type getDayCellProps from "./getDayCellProps";
 
 export type DatePickerContextType = {
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   monthYearLabel: string;
-  selectedMonth: dayjs.Dayjs;
-  setSelectedDay: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
-  selectedDay: dayjs.Dayjs;
   weeks: string[][];
   viewRef: React.RefObject<HTMLTableSectionElement>;
+  getDayCellProps: typeof getDayCellProps;
 } | null;
 
 export const DatePickerContext = createContext<DatePickerContextType>(null);

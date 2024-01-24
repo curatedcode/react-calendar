@@ -1,9 +1,4 @@
-import { useMemo } from "react";
-import {
-  calendarViewOptions,
-  readableCalendarViewOptions,
-  type ReadableCalendarViewType,
-} from "../types";
+import { calendarViewOptions, type CalendarViewType } from "../types";
 import { useCalendarContext } from "./Context";
 
 export type CalendarHeaderProps = {
@@ -32,59 +27,41 @@ export type CalendarHeaderProps = {
      * This uses a non-typesafe string so you can pass in the value of "e.currentTarget.value".
      * It will check if any option matches otherwise do nothing.
      */
-    setView: (view: string) => void;
+    setCurrentView: (newView: string) => void;
 
     /**
      * The current calendar view
      */
-    currentView: ReadableCalendarViewType;
+    currentView: CalendarViewType;
 
     /**
-     * The options for the view.
+     * All calendar view options
      */
-    viewOptions: typeof readableCalendarViewOptions;
+    viewOptions: typeof calendarViewOptions;
   }) => React.ReactNode;
 };
 
 function CalendarHeader({ children }: CalendarHeaderProps) {
   const {
-    calendarSelectedDate,
-    calendarView,
-    setCalendarView: setCalendarViewInternal,
-    handleCalendarNextPeriod,
-    handleCalendarPreviousPeriod,
-    handleCalendarDateReset,
+    selectedDate,
+    setCurrentView,
+    handleNextPeriod,
+    handlePreviousPeriod,
+    handleDateReset,
+    currentView,
+    viewOptions,
   } = useCalendarContext();
-
-  function setView(value: string) {
-    const match = calendarViewOptions.find(
-      (option) => option.readable === value
-    );
-
-    if (!match) return;
-    setCalendarViewInternal(match.internal);
-  }
-
-  const readableCalendarView = useMemo(() => {
-    const match = calendarViewOptions.find(
-      (option) => option.internal === calendarView
-    );
-
-    if (!match) return calendarViewOptions[0].readable;
-
-    return match.readable;
-  }, [calendarView]);
 
   return (
     <>
       {children({
-        viewOptions: readableCalendarViewOptions,
-        handleDateReset: handleCalendarDateReset,
-        selectedDate: calendarSelectedDate.toISOString(),
-        setView,
-        currentView: readableCalendarView,
-        handleNextPeriod: handleCalendarNextPeriod,
-        handlePreviousPeriod: handleCalendarPreviousPeriod,
+        handleDateReset,
+        selectedDate: selectedDate.toISOString(),
+        setCurrentView,
+        currentView,
+        handleNextPeriod,
+        handlePreviousPeriod,
+        viewOptions,
       })}
     </>
   );

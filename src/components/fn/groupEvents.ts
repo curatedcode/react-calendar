@@ -11,7 +11,7 @@ export type GroupEventsArgs = {
   /**
    * The calendar view. Will determine how the events are grouped
    */
-  calendarView: CalendarViewType;
+  currentView: CalendarViewType;
 
   /**
    * The selected date of the calendar as a dayjs object
@@ -24,7 +24,7 @@ export type GroupEventsArgs = {
  */
 function groupEvents({
   events,
-  calendarView,
+  currentView,
   calendarSelectedDate,
 }: GroupEventsArgs): EventGroup[] {
   let amountOfGroups: number;
@@ -32,23 +32,23 @@ function groupEvents({
     (val) => val
   );
 
-  switch (calendarView) {
-    case "day":
+  switch (currentView) {
+    case "Day":
       amountOfGroups = 1;
       break;
-    case "week":
+    case "Week":
       amountOfGroups = 7;
       break;
-    case "5-days":
+    case "5 days":
       amountOfGroups = 5;
       break;
-    case "month":
+    case "Month":
       amountOfGroups = sixWeeksFromMonth.length;
       break;
-    case "year":
+    case "Year":
       amountOfGroups = 12;
       break;
-    case "schedule":
+    case "Schedule":
       amountOfGroups = 4;
       break;
   }
@@ -73,20 +73,20 @@ function groupEvents({
       events: [],
     };
 
-    switch (calendarView) {
-      case "day":
+    switch (currentView) {
+      case "Day":
         group.date = calendarSelectedDate.toISOString();
         break;
-      case "week":
+      case "Week":
         group.date = calendarSelectedDate
           .startOf("week")
           .add(i, "days")
           .toISOString();
         break;
-      case "month":
+      case "Month":
         group.date = sixWeeksFromMonth[i];
         break;
-      case "year": {
+      case "Year": {
         const startDate = calendarSelectedDate.startOf("month");
         group.date = startDate.add(i, "months").toISOString();
         break;
@@ -109,7 +109,7 @@ function groupEvents({
 
       const isSameDate = eventDate.isSame(
         group.date,
-        calendarView === "year" ? "month" : "date"
+        currentView === "Year" ? "month" : "date"
       );
 
       if (!isSameDate) continue;

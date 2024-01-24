@@ -2,7 +2,11 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import "../../global.css";
 import groupEvents from "../fn/groupEvents";
-import type { CalendarViewType, EventType } from "../types";
+import {
+  calendarViewOptions,
+  type CalendarViewType,
+  type EventType,
+} from "../types";
 import { CalendarContext } from "./Context";
 import Header from "./Header";
 import View from "./View";
@@ -31,7 +35,7 @@ export type CalendarProps = {
 
 function CalendarRoot({
   children,
-  defaultView = "5-days",
+  defaultView = "5 days",
   events,
   className,
 }: CalendarProps) {
@@ -39,39 +43,47 @@ function CalendarRoot({
 
   const [datePickerSelectedDate, setDatePickerSelectedDate] = useState(dayjs());
 
-  const [calendarView, setCalendarView] =
+  const [currentView, setCurrentViewInternal] =
     useState<CalendarViewType>(defaultView);
 
   const [groupedEvents, setGroupedEvents] = useState(
-    groupEvents({ calendarSelectedDate, calendarView, events })
+    groupEvents({ calendarSelectedDate, currentView, events })
   );
+
+  function setCurrentView(newView: string) {
+    const match = calendarViewOptions.find((val) => val === newView);
+
+    if (!match) return;
+
+    setCurrentViewInternal(match);
+  }
 
   function getTimeline() {
     let time: number;
     let units: "days" | "months";
 
-    switch (calendarView) {
-      case "day":
+    switch (currentView) {
+      case "Day":
         time = 1;
         units = "days";
         break;
-      case "week":
+      case "Week":
         time = 7;
         units = "days";
         break;
-      case "5-days":
+      case "5 days":
         time = 5;
         units = "days";
         break;
-      case "month":
+      case "Month":
         time = 1;
         units = "months";
         break;
-      case "year":
+      case "Year":
         time = 1;
         units = "days";
         break;
-      case "schedule":
+      case "Schedule":
         time = 4;
         units = "days";
         break;
@@ -80,7 +92,7 @@ function CalendarRoot({
     return { time, units };
   }
 
-  function handleCalendarNextPeriod() {
+  function handleNextPeriod() {
     const timelineToGoForward = getTimeline();
 
     setDatePickerSelectedDate((date) =>
@@ -92,7 +104,7 @@ function CalendarRoot({
     );
   }
 
-  function handleCalendarPreviousPeriod() {
+  function handlePreviousPeriod() {
     const timelineToGoBack = getTimeline();
 
     setDatePickerSelectedDate((date) =>
@@ -104,31 +116,28 @@ function CalendarRoot({
     );
   }
 
-  function handleCalendarDateReset() {
+  function handleDateReset() {
     setCalendarSelectedDate(dayjs());
   }
 
   useEffect(() => {
     setGroupedEvents(
-      groupEvents({ calendarSelectedDate, calendarView, events })
+      groupEvents({ calendarSelectedDate, currentView, events })
     );
-  }, [calendarSelectedDate, calendarView, events]);
-
-  useEffect(() => {
-    setCalendarView(defaultView);
-  }, [defaultView]);
+  }, [calendarSelectedDate, currentView, events]);
 
   return (
     <CalendarContext.Provider
       value={{
         datePickerSelectedDate,
-        calendarSelectedDate,
-        calendarView,
-        setCalendarView,
+        viewOptions: calendarViewOptions,
+        selectedDate: calendarSelectedDate,
+        currentView,
+        setCurrentView,
         events: groupedEvents,
-        handleCalendarPreviousPeriod,
-        handleCalendarDateReset,
-        handleCalendarNextPeriod,
+        handlePreviousPeriod,
+        handleDateReset,
+        handleNextPeriod,
       }}
     >
       <div className={className}>{children}</div>

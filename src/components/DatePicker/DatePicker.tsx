@@ -4,6 +4,7 @@ import getSixWeeksByMonth from "../fn/getSixWeeksByMonth";
 import { DatePickerContext } from "./Context";
 import Header from "./Header";
 import View from "./View";
+import getDayCellProps from "./getDayCellProps";
 
 export type DatePickerProps = {
   /**
@@ -23,14 +24,8 @@ export type DatePickerProps = {
 function DatePickerRoot({ children, className }: DatePickerProps) {
   const { datePickerSelectedDate } = useCalendarContext();
 
-  const [selectedDay, setSelectedDay] = useState(datePickerSelectedDate);
   const [selectedMonth, setSelectedMonth] = useState(datePickerSelectedDate);
   const [weeks, setWeeks] = useState(getSixWeeksByMonth(selectedMonth));
-
-  useEffect(() => {
-    setSelectedDay(datePickerSelectedDate);
-    setSelectedMonth(datePickerSelectedDate);
-  }, [datePickerSelectedDate]);
 
   function handlePrevMonth() {
     setSelectedMonth((prev) => prev.subtract(1, "month"));
@@ -54,11 +49,9 @@ function DatePickerRoot({ children, className }: DatePickerProps) {
         monthYearLabel,
         handleNextMonth,
         handlePrevMonth,
-        selectedDay,
-        selectedMonth,
-        setSelectedDay,
         weeks,
         viewRef,
+        getDayCellProps,
       }}
     >
       <div

@@ -19,14 +19,6 @@ export type EventGroup = {
 };
 
 export type CalendarViewType =
-  | "day"
-  | "week"
-  | "5-days"
-  | "month"
-  | "year"
-  | "schedule";
-
-export type ReadableCalendarViewType =
   | "Day"
   | "5 days"
   | "Week"
@@ -34,22 +26,13 @@ export type ReadableCalendarViewType =
   | "Year"
   | "Schedule";
 
-export const readableCalendarViewOptions = [
+export const calendarViewOptions: CalendarViewType[] = [
   "Day",
   "5 days",
   "Week",
   "Month",
   "Year",
   "Schedule",
-] as const;
-
-export const calendarViewOptions = [
-  { internal: "day", readable: "Day" },
-  { internal: "5-days", readable: "5 days" },
-  { internal: "week", readable: "Week" },
-  { internal: "month", readable: "Month" },
-  { internal: "year", readable: "Year" },
-  { internal: "schedule", readable: "Schedule" },
 ] as const;
 
 export type DefaultComponentProps = {

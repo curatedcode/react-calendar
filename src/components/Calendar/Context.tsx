@@ -1,15 +1,20 @@
 import dayjs from "dayjs";
 import { createContext, useContext } from "react";
-import type { CalendarViewType, EventGroup } from "../types";
+import type {
+  CalendarViewType,
+  EventGroup,
+  calendarViewOptions,
+} from "../types";
 
 export type CalendarContextType = {
   datePickerSelectedDate: dayjs.Dayjs;
-  calendarSelectedDate: dayjs.Dayjs;
-  calendarView: CalendarViewType;
-  setCalendarView: React.Dispatch<React.SetStateAction<CalendarViewType>>;
-  handleCalendarNextPeriod: () => void;
-  handleCalendarPreviousPeriod: () => void;
-  handleCalendarDateReset: () => void;
+  selectedDate: dayjs.Dayjs;
+  currentView: CalendarViewType;
+  setCurrentView: (newView: string) => void;
+  viewOptions: typeof calendarViewOptions;
+  handleNextPeriod: () => void;
+  handlePreviousPeriod: () => void;
+  handleDateReset: () => void;
   events: EventGroup[];
 } | null;
 

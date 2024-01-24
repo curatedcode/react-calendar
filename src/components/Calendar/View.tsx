@@ -2,31 +2,31 @@ import type { CalendarViewType, EventGroup } from "../types";
 import { useCalendarContext } from "./Context";
 
 export type CalendarViewProps = {
-  children: (_: {
-    groupedEvents: EventGroup[];
-    handleCalendarNextPeriod: () => void;
-    handleCalendarPreviousPeriod: () => void;
-    currentView: CalendarViewType;
-  }) => React.ReactNode;
+  children:
+    | ((_: {
+        events: EventGroup[];
+        handleNextPeriod: () => void;
+        handlePreviousPeriod: () => void;
+        currentView: CalendarViewType;
+      }) => React.ReactNode)
+    | React.ReactNode;
   className?: string;
 };
 
 function CalendarView({ children, className }: CalendarViewProps) {
-  const {
-    events,
-    handleCalendarNextPeriod,
-    handleCalendarPreviousPeriod,
-    calendarView,
-  } = useCalendarContext();
+  const { events, handleNextPeriod, handlePreviousPeriod, currentView } =
+    useCalendarContext();
 
   return (
     <div role="presentation" className={className}>
-      {children({
-        currentView: calendarView,
-        groupedEvents: events,
-        handleCalendarNextPeriod,
-        handleCalendarPreviousPeriod,
-      })}
+      {typeof children === "function"
+        ? children({
+            currentView,
+            events,
+            handleNextPeriod,
+            handlePreviousPeriod,
+          })
+        : children}
     </div>
   );
 }

@@ -77,7 +77,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "day",
+      currentView: "Day",
     });
 
     expect(result).toStrictEqual([
@@ -159,7 +159,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "week",
+      currentView: "Week",
     });
 
     expect(result).toStrictEqual([
@@ -283,7 +283,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "5-days",
+      currentView: "5 days",
     });
 
     expect(result).toStrictEqual([
@@ -396,7 +396,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "month",
+      currentView: "Month",
     });
 
     expect(result).toStrictEqual([
@@ -592,7 +592,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "year",
+      currentView: "Year",
     });
 
     expect(result).toStrictEqual([
@@ -767,7 +767,7 @@ describe("groupEvents", () => {
     const result = groupEvents({
       events,
       calendarSelectedDate: dayjs(),
-      calendarView: "schedule",
+      currentView: "Schedule",
     });
 
     expect(result).toStrictEqual([
