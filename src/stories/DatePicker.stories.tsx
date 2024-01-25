@@ -3,57 +3,71 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import dayjs from "dayjs";
 import { useState } from "react";
-import "../../global.css";
-import { CalendarContext } from "../Calendar/Context";
-import type { CalendarViewType } from "../types";
-import DatePicker from "./DatePicker";
+import { CalendarContext } from "../components/Calendar/Context";
+import { useDatePickerContext } from "../components/DatePicker/Context";
+import DatePicker from "../components/DatePicker/DatePicker";
+import {
+  calendarViewOptions,
+  type CalendarViewType,
+} from "../components/types";
+
+function DatePickerHeader() {
+  const { monthYearLabel, handlePrevMonth, handleNextMonth } =
+    useDatePickerContext();
+
+  return (
+    <>
+      <div className="font-medium mr-auto" aria-hidden="true">
+        {monthYearLabel}
+      </div>
+      <button
+        aria-label="Previous month"
+        type="button"
+        onClick={handlePrevMonth}
+      >
+        <ChevronLeftIcon className="w-5" aria-hidden="true" />
+      </button>
+      <button aria-label="Next month" type="button" onClick={handleNextMonth}>
+        <ChevronRightIcon className="w-5" aria-hidden="true" />
+      </button>
+    </>
+  );
+}
 
 function DatePickerExample({
   hideDatesOutsideMonth,
 }: {
   hideDatesOutsideMonth: boolean;
 }) {
-  const [calendarView, setCalendarView] = useState<CalendarViewType>("5-days");
+  const [currentView, setCurrentViewInternal] =
+    useState<CalendarViewType>("5 days");
+
+  function setCurrentView(newView: string) {
+    const match = calendarViewOptions.find((val) => val === newView);
+
+    if (!match) return;
+
+    setCurrentViewInternal(match);
+  }
 
   return (
     <CalendarContext.Provider
       value={{
         datePickerSelectedDate: dayjs(),
-        calendarSelectedDate: dayjs(),
-        handleCalendarDateReset: () => null,
-        handleCalendarNextPeriod: () => null,
-        handleCalendarPreviousPeriod: () => null,
-        calendarView,
-        setCalendarView,
+        selectedDate: dayjs(),
+        handleDateReset: () => null,
+        handleNextPeriod: () => null,
+        handlePreviousPeriod: () => null,
+        currentView,
+        setCurrentView,
+        viewOptions: calendarViewOptions,
         events: [],
       }}
     >
       <DatePicker>
-        <DatePicker.Header>
-          {({ handleNextMonth, handlePrevMonth, monthYearLabel }) => (
-            <>
-              <div className="font-medium mr-auto" aria-hidden="true">
-                {monthYearLabel}
-              </div>
-              <button
-                aria-label="Previous month"
-                type="button"
-                onClick={handlePrevMonth}
-              >
-                <ChevronLeftIcon className="w-5" aria-hidden="true" />
-              </button>
-              <button
-                aria-label="Next month"
-                type="button"
-                onClick={handleNextMonth}
-              >
-                <ChevronRightIcon className="w-5" aria-hidden="true" />
-              </button>
-            </>
-          )}
-        </DatePicker.Header>
+        <DatePickerHeader />
         <DatePicker.View>
-          {({ viewRef, weeks, getDayCellProps }) => (
+          {({ weeks, viewRef, getDayCellProps }) => (
             <>
               <thead aria-hidden="true">
                 <tr className="grid grid-cols-7 h-6">

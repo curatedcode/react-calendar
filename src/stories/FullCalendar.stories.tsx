@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
-import DatePicker from "../DatePicker";
-import Calendar, { type CalendarProps } from "./Calendar";
+import Calendar, { type CalendarProps } from "../components/Calendar";
+import DatePicker from "../components/DatePicker";
 
 function CalendarExample({
   hideDatesOutsideMonth,
@@ -16,7 +16,7 @@ function CalendarExample({
           handleNextPeriod,
           handlePreviousPeriod,
           viewOptions,
-          setView,
+          setCurrentView,
           currentView,
           selectedDate,
         }) => {
@@ -75,7 +75,7 @@ function CalendarExample({
               <select
                 aria-label="Calendar view"
                 defaultValue={currentView}
-                onChange={(e) => setView(e.currentTarget.value)}
+                onChange={(e) => setCurrentView(e.currentTarget.value)}
               >
                 {viewOptions.map((option) => (
                   <option key={crypto.randomUUID()} value={option}>
@@ -164,12 +164,12 @@ function CalendarExample({
           </DatePicker.View>
         </DatePicker>
         <Calendar.View>
-          {({ groupedEvents, currentView }) => (
+          {({ events, currentView }) => (
             <div
               className="data-[calendar-view='day']:grid-cols-1 grid data-[calendar-view='week']:grid-cols-7 data-[calendar-view='5-days']:grid-cols-5 w-[48rem]"
               data-calendar-view={currentView}
             >
-              {groupedEvents.map((group) => (
+              {events.map((group) => (
                 <div key={crypto.randomUUID()}>
                   <span>{group.date}</span>
                   <div className="grid">
@@ -188,7 +188,7 @@ function CalendarExample({
 }
 
 const meta: Meta<typeof CalendarExample> = {
-  title: "Calendar",
+  title: "Calendar with Date Picker",
   component: CalendarExample,
   parameters: {
     layout: "centered",
@@ -209,7 +209,7 @@ const meta: Meta<typeof CalendarExample> = {
     },
   },
   args: {
-    defaultView: "5-days",
+    defaultView: "5 days",
     hideDatesOutsideMonth: false,
   },
 };
